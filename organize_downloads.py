@@ -3,7 +3,7 @@
 import sys
 from pathlib import Path
 
-powerpoint = ['.ppt']
+powerpoint = ['.ppt', '.pptx']
 images = ['png', 'jpg', 'jpeg']
 archives = ['.zip', '.rar', '.tar.gz']
 documents = ['.pdf', '.djvu' , '.doc', '.docx']

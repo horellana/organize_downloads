@@ -3,10 +3,18 @@
 import sys
 from pathlib import Path
 
-powerpoint = ['.ppt', '.pptx']
-images = ['png', 'jpg', 'jpeg']
-archives = ['.zip', '.rar', '.tar.gz']
-documents = ['.pdf', '.djvu' , '.doc', '.docx']
+config = {
+    'powerpoint': ['.ppt', '.pptx'],
+    'images': ['png', 'jpg', 'jpeg'],
+    'archives': ['.zip', '.rar', '.tar.gz'],
+    'documents': ['.pdf', '.djvu' , '.doc', '.docx']
+}
+
+def get_folder(ext, config):
+    for folder, extension in config.items():
+        if ext in extension:
+            return folder
+    raise Exception('Unkown suffix: {}'.format(ext))
 
 if __name__ == '__main__':
     if len(sys.argv) <= 1:
@@ -17,11 +25,8 @@ if __name__ == '__main__':
     files = (Path(path) for path in root.iterdir() if path.is_file())
     
     for file in files:
-        if file.suffix in powerpoint:
-            file.rename('{}/powerpoint/{}'.format(file.parents[0], file.name))
-        elif file.suffix in archives:
-            file.rename('{}/archives/{}'.format(file.parents[0], file.name))
-        elif file.suffix in documents:
-            file.rename('{}/documents/{}'.format(file.parents[0], file.name))
-
-        
+        suffix = file.suffix
+        folder = get_folder(suffix, config)
+        file.rename('{root}/{folder}/{file}'.format(root=file.parents[0],
+                                                    folder=folder,
+                                                    file=file.name))

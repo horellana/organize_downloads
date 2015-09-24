@@ -7,15 +7,9 @@ from pathlib import Path
 class UnknownSuffix(Exception):
     pass
 
-config = {
-    'powerpoint': ['.ppt', '.pptx'],
-    'images': ['png', 'jpg', 'jpeg'],
-    'archives': ['.zip', '.rar', '.tar.gz'],
-    'documents': ['.pdf', '.djvu' , '.doc', '.docx']
-}
-
 def get_config(file):
-    return json.load(file)
+    with open(file, 'r') as f:
+        return json.load(f)['config']
     
 def get_folder(ext, config):
     for folder, extension in config.items():
@@ -25,10 +19,11 @@ def get_folder(ext, config):
 
 if __name__ == '__main__':
     if len(sys.argv) <= 1:
-        sys.stderr.write('Usage: organize_downloads.py path\n')
+        sys.stderr.write('Usage: organize_downloads.py config-path downloads-path\n')
         sys.exit(1)
 
-    root = Path(sys.argv[1])
+    root = Path(sys.argv[2])
+    config = get_config(sys.argv[1])
     files = (Path(path) for path in root.iterdir() if path.is_file())
     
     for file in files:

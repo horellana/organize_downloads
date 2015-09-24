@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+import json
 from pathlib import Path
 
 class UnknownSuffix(Exception):
@@ -13,6 +14,9 @@ config = {
     'documents': ['.pdf', '.djvu' , '.doc', '.docx']
 }
 
+def get_config(file):
+    return json.load(file)
+    
 def get_folder(ext, config):
     for folder, extension in config.items():
         if ext in extension:
@@ -43,5 +47,4 @@ if __name__ == '__main__':
                                                         folder=folder,
                                                         file=file.name))
         except UnknownSuffix as err:
-            sys.stderr.write('{} => '.format(file.as_posix()))
-            sys.stderr.write('Error: {}'.format(err))
+            sys.stderr.write('{} => {}'.format(file.as_posix(), err))

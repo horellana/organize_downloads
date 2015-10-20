@@ -18,7 +18,7 @@ def get_folder(ext, config):
     raise UnknownSuffix('Unkown suffix: {}\n'.format(ext))
 
 if __name__ == '__main__':
-    if len(sys.argv) <= 1:
+    if len(sys.argv) <= 2:
         sys.stderr.write('Usage: organize_downloads.py config-path downloads-path\n')
         sys.exit(1)
 
@@ -37,7 +37,7 @@ if __name__ == '__main__':
                                      root=file.parents[0],
                                      folder=folder,
                                      name=file.name))
-        
+            
             file.rename('{root}/{folder}/{file}'.format(root=file.parents[0],
                                                         folder=folder,
                                                         file=file.name))

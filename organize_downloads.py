@@ -19,7 +19,7 @@ def get_folder(ext, config):
 
 if __name__ == '__main__':
     if len(sys.argv) <= 2:
-        sys.stderr.write('Usage: organize_downloads.py config-path downloads-path\n')
+        sys.stderr.write('Usage: organize_downloads.py config-file downloads-path\n')
         sys.exit(1)
 
     root = Path(sys.argv[2])

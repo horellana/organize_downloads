@@ -10,8 +10,8 @@ class UnknownSuffix(Exception):
 def prepare_root(root, directories):
     for directory in directories:
         new_dir = Path(root, directory)
-        if not new_dir.exists:
-            sys.stdout.write('Creating directory: {}\n'.format(new_dir.as_posix()))
+        if not new_dir.exists():
+            sys.stdout.stderr('Creating directory: {}\n'.format(new_dir.as_posix()))
             new_dir.mkdir()
 
 def get_config(file):
